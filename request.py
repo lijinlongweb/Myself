@@ -15,19 +15,19 @@ def login():#登录
     browser.find_element_by_id("pass").send_keys(useDict['pass'])
     browser.find_element_by_id('loginbtn').click()
     
-def loading():#加载框架
+def loading(First,Second):#加载框架
     login()
     try:
         element = WebDriverWait(browser, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//div[@id='menut3']/div[2]"))
+            EC.presence_of_element_located((By.XPATH, "//div[@id='menut%s']/div[2]" %(First)))
         )
-        browser.find_element_by_xpath("//div[@id='menut3']/div[2]").click()
+        browser.find_element_by_xpath("//div[@id='menut%s']/div[2]" %(First)).click()
     finally:
         try:
             element = WebDriverWait(browser, 10).until(
-                EC.presence_of_element_located((By.XPATH, "//div[@id='menua3']/div[3]"))
+                EC.presence_of_element_located((By.XPATH, "//div[@id='menua%s']/div[%s]" %(First,Second)))
             )
-            browser.find_element_by_xpath("//div[@id='menua3']/div[3]").click()
+            browser.find_element_by_xpath("//div[@id='menua%s']/div[%s]" %(First,Second)).click()
         finally:
             pass
 
