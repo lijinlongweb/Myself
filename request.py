@@ -32,7 +32,7 @@ def loading(First,Second):#加载框架
             pass
 
 def search():#查询成绩
-    loading()
+    loading(3,3)
     browser.switch_to_frame('mainframe')
     try:
         element = WebDriverWait(browser, 10).until(
