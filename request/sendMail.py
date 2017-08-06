@@ -6,11 +6,11 @@ def sendMail(receiver,mail_title,mail_content):
     #qq邮箱smtp服务器
     host_server = 'smtp.qq.com'
     #sender_qq为发件人的qq号码
-    sender_qq = '1191170766'
+    sender_qq = '1231231233'
     #pwd为qq邮箱的授权码
-    pwd = 'zjqfuioxtozqgjia'
+    pwd = 'dasfsdfs'
     #发件人的邮箱
-    sender_qq_mail = 'chen_ye_119@qq.com'
+    sender_qq_mail = '邮箱地址'
     #收件人邮箱 receiver
     #邮件的正文内容 mail_content
     #邮件标题 mail_title
@@ -30,4 +30,3 @@ def sendMail(receiver,mail_title,mail_content):
     smtp.sendmail(sender_qq_mail, receiver, msg.as_string())
     smtp.quit()
     
-#sendMail(receiver="1191170766@qq.com",mail_title="test",mail_content="这是一个测试")
