@@ -2,8 +2,10 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-useDict={"user":"16111204040","pass":"123456789","usertype":"stu"}
-url="http://jwgl.ahnu.edu.cn/"
+#使用者账号密码
+useDict={"user":"","pass":"","usertype":""}
+#网站地址
+url=""
 
 #浏览器窗口初始化
 browser = webdriver.Chrome()
