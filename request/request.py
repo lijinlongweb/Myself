@@ -4,7 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from sendMail import sendMail
 
-url="http://jwgl.ahnu.edu.cn/"
+url=""
 #浏览器窗口初始化
 browser = webdriver.Chrome()
 
@@ -58,7 +58,7 @@ def search(userDict):#查询成绩
                      mail_title="期末成绩单",
                      mail_content=html)
                 
-search(userDict={"user":"16111204040","pass":"123456789","email":"1191170766@qq.com"})
+search(userDict={"user":"","pass":"","email":""})
 
 
 browser.quit()
