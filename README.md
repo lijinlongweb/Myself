@@ -8,5 +8,5 @@
 爬取某校教务系统
 
 ### 爬取妹子图
-爬取网址为http://www.mzitu.com/的妹子图片
+爬取网址为http://www.mzitu.com/ 的妹子图片
 PS：翻页功能只需在url增加`page/[0-9]*`进行遍历就行
