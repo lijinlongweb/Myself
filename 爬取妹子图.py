@@ -5,7 +5,17 @@ import time
 import os
 # 初始化数据
 RootUrl = r"http://www.mzitu.com"
-path = os.getcwd()
+path = os.path.join(os.getcwd(), 'meizitu')
+Headers = {
+    'Accept-Encoding': r'gzip, deflate',
+    'Accept-Language': r'zh-CN,zh;q=0.8',
+    'Cache-Control': r'max-age=0',
+    'DNT': r'1',
+    'Host': r'i.meizitu.net',
+    'Proxy-Connection': r'keep-alive',
+    'Upgrade-Insecure-Requests': r'1',
+    'User-Agent': r'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36 OPR/47.0.2631.39'
+}
 
 
 def get_image(url, filename):  # 保存图片
@@ -14,12 +24,14 @@ def get_image(url, filename):  # 保存图片
         os.makedirs(os.path.dirname(imgPath))  # 建立该目录
     with open(imgPath, "wb") as jpg:  # 保存图片
         try:  # 防止被封
-            jpg.write(requests.get(url).content)
+            jpg.write(requests.get(url, headers=Headers).content)
         except requests.Timeout:
             time.sleep(1)
             get_image(url, filename)
+    if os.path.getsize(imgPath) < 1000:  # 如果图片获取失败，重新访问
+        time.sleep(1)
+        get_image(url, filename)
     print("Save image :"+imgPath)  # 日志
-    time.sleep(1)
 
 
 def get_more_url(Root_Url):  # 获得当前套图
@@ -55,5 +67,6 @@ def get_img_url(MoniUrl):  # 获得当前页面妹子图链接
     return set(imgList)  # set保证不会有重复链接
 
 
-for one in get_img_url(RootUrl):
-    get_more_url(one)
+if __name__ == '__main__':
+    for one in get_img_url(RootUrl):
+        get_more_url(one)
