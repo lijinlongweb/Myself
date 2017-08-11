@@ -48,15 +48,25 @@ def search(userDict):#查询成绩
             datas = browser.find_elements_by_xpath("//tbody/tr")
             html = "<html><body><table>"
             for i in range(2, len(datas)):
-                html+='<tr>'
+                html += '<tr>'
                 for x in (2, 8, 9):
-                    data = browser.find_element_by_xpath("//tbody/tr[%s]/td[%s]" % (i, x)).text
-                    html+="<th>%s</th>" %(data)
-                html+='</tr>'
-            html+= "</table></body></html>"
-            sendMail(receiver=userDict["email"],
-                     mail_title="期末成绩单",
-                     mail_content=html)
+                    data = self.browser.find_element_by_xpath(
+                            "//tbody/tr[%s]/td[%s]" % (i, x)).text
+                    if data == '':  # 检查成绩是否出来
+                        break
+                    html += "<th>%s</th>" % (data)
+                else:
+                    html += '</tr>'
+                    continue
+                break
+            else:
+                html += "</table></body></html>"
+                sendMail(
+                        receiver=userDict["email"],
+                        mail_title="期末成绩单",
+                        mail_content=html)
+                return 1
+            return 0
                 
 search(userDict={"user":"","pass":"","email":""})
 
