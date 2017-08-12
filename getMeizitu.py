@@ -4,7 +4,7 @@ import re
 import time
 import os
 # 初始化数据
-RootUrl = r"http://www.mzitu.com/"
+RootUrl = r"http://www.mzitu.com/all"
 path = os.path.join(os.getcwd(), 'meizitu')
 
 # 定制响应头
