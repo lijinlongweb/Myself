@@ -3,22 +3,30 @@ import requests
 import re
 import time
 import os
-import sys
 # 初始化数据
 RootUrl = r"http://www.mzitu.com/all"
 path = os.path.join(os.getcwd(), 'meizitu')
 
 # 定制响应头
 Headers = {
-    'Accept-Encoding': r'gzip, deflate',
-    'Accept-Language': r'zh-CN,zh;q=0.8',
-    'Cache-Control': r'max-age=0',
-    'DNT': r'1',
-    'Referer': '',
-    'Upgrade-Insecure-Requests': r'1',
-    'Proxy-Connection': r'keep-alive',
-    'Host': r'i.meizitu.net',
-    'User-Agent': r'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36 OPR/47.0.2631.39'
+    'Accept-Encoding':
+    r'gzip, deflate',
+    'Accept-Language':
+    r'zh-CN,zh;q=0.8',
+    'Cache-Control':
+    r'max-age=0',
+    'DNT':
+    r'1',
+    'Referer':
+    '',
+    'Upgrade-Insecure-Requests':
+    r'1',
+    'Proxy-Connection':
+    r'keep-alive',
+    'Host':
+    r'i.meizitu.net',
+    'User-Agent':
+    r'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36 OPR/47.0.2631.39'
 }
 
 
@@ -61,11 +69,11 @@ def get_more_url(Root_Url):  # 递归获得当前套图
     # 储存图片
     try:  # 拼接图片文件名称
         name = Root_Url.split('/')
-        filename = os.path.join(name[3], name[4]+'.jpg')
+        filename = os.path.join(name[3], name[4] + '.jpg')
         if int(name[4]) > 10:
-            print("\b\b"+name[4], end='', flush=True)
+            print("\b\b" + name[4], end='', flush=True)
         else:
-            print("\b"+name[4], end='', flush=True)
+            print("\b" + name[4], end='', flush=True)
     except IndexError:
         filename = os.path.join(name[3], '1.jpg')
         print('   1', end='', flush=True)
@@ -91,15 +99,17 @@ def get_img_url(MoniUrl):  # 获得当前页面妹子图链接
 if __name__ == '__main__':
     while True:
         for one in get_img_url(RootUrl):
+            flag = 1
             try:  # 打开已经爬的文件列表
                 with open(os.path.join(path, 'logs.txt'), "r") as logs:
                     for first in logs:
                         if one in first:
-                            continue
+                            flag = 0
             except IOError:
                 pass
-            NOW_TIME = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-            print(NOW_TIME+" Save File from:"+one, end='', flush=True)
-            get_more_url(one)
-            with open(os.path.join(path, 'logs.txt'), "a") as logs:  # 保存日志
-                logs.write(one+'\n')
+            if flag == 0:
+                NOW_TIME = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+                print(NOW_TIME + " Save File from:" + one, end='', flush=True)
+                get_more_url(one)
+                with open(os.path.join(path, 'logs.txt'), "a") as logs:  # 保存日志
+                    logs.write(one + '\n')
