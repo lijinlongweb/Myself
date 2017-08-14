@@ -3,6 +3,7 @@ import requests
 import re
 import time
 import os
+import sys
 # 初始化数据
 RootUrl = r"http://www.mzitu.com/all"
 path = os.path.join(os.getcwd(), 'meizitu')
@@ -42,7 +43,7 @@ def get_image(url, filename, headers):  # 保存图片
                 time.sleep(3)
 
 
-def get_more_url(Root_Url):  # 获得当前套图
+def get_more_url(Root_Url):  # 递归获得当前套图
     while True:  # 死循环处理网页内容获取
         try:
             imagePage = requests.get(Root_Url)
@@ -61,32 +62,40 @@ def get_more_url(Root_Url):  # 获得当前套图
     try:  # 拼接图片文件名称
         name = Root_Url.split('/')
         filename = os.path.join(name[3], name[4]+'.jpg')
-        print(' '+name[4], end='')
+        if int(name[4]) > 10:
+            print("\b\b"+name[4], end='')
+        else:
+            print("\b"+name[4], end='')
+        sys.stdout.flush()
     except IndexError:
         filename = os.path.join(name[3], '1.jpg')
-        print(' 1', end='')
+        print('   1', end='')
+        sys.stdout.flush()
     finally:
         Headers['Referer'] = Root_Url
         get_image(result, filename, Headers)  # 调用函数保存图片
     # 判断是否是最后一张
     if re.match("http://www.mzitu.com/[0-9]+/[0-9]+", href['href']):
         get_more_url(href.attrs['href'])
-    else:
+    else:  # 递归结束
         print('\n')
+        sys.stdout.flush()
         return 1
 
 
 def get_img_url(MoniUrl):  # 获得当前页面妹子图链接
-    page = requests.get(RootUrl)
+    page = requests.get(MoniUrl)
     text = BeautifulSoup(page.text, "html.parser")
     list = text.find_all(href=re.compile("http://www.mzitu.com/[0-9]+"))
     imgList = [one['href'] for one in list]
-    return imgList
+    return set(imgList)  # set防止重复的url
 
 
 if __name__ == '__main__':
     while True:
         for one in get_img_url(RootUrl):
             NOW_TIME = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-            print(NOW_TIME+" Save File from:"+one)
+            print(NOW_TIME+" Save File from:"+one, end='')
+            sys.stdout.flush()
             get_more_url(one)
+
