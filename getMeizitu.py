@@ -63,14 +63,12 @@ def get_more_url(Root_Url):  # 递归获得当前套图
         name = Root_Url.split('/')
         filename = os.path.join(name[3], name[4]+'.jpg')
         if int(name[4]) > 10:
-            print("\b\b"+name[4], end='')
+            print("\b\b"+name[4], end='', flush=True)
         else:
-            print("\b"+name[4], end='')
-        sys.stdout.flush()
+            print("\b"+name[4], end='', flush=True)
     except IndexError:
         filename = os.path.join(name[3], '1.jpg')
-        print('   1', end='')
-        sys.stdout.flush()
+        print('   1', end='', flush=True)
     finally:
         Headers['Referer'] = Root_Url
         get_image(result, filename, Headers)  # 调用函数保存图片
@@ -78,8 +76,7 @@ def get_more_url(Root_Url):  # 递归获得当前套图
     if re.match("http://www.mzitu.com/[0-9]+/[0-9]+", href['href']):
         get_more_url(href.attrs['href'])
     else:  # 递归结束
-        print('\n')
-        sys.stdout.flush()
+        print('\n', flush=True)
         return 1
 
 
@@ -94,8 +91,15 @@ def get_img_url(MoniUrl):  # 获得当前页面妹子图链接
 if __name__ == '__main__':
     while True:
         for one in get_img_url(RootUrl):
+            try:  # 打开已经爬的文件列表
+                with open(os.path.join(path, 'logs.txt'), "r") as logs:
+                    for first in logs:
+                        if one in first:
+                            continue
+            except IOError:
+                pass
             NOW_TIME = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-            print(NOW_TIME+" Save File from:"+one, end='')
-            sys.stdout.flush()
+            print(NOW_TIME+" Save File from:"+one, end='', flush=True)
             get_more_url(one)
-
+            with open(os.path.join(path, 'logs.txt'), "a") as logs:  # 保存日志
+                logs.write(one+'\n')
