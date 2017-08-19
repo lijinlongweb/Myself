@@ -99,17 +99,8 @@ def get_img_url(MoniUrl):  # 获得当前页面妹子图链接
 if __name__ == '__main__':
     while True:
         for one in get_img_url(RootUrl):
-            flag = 1
-            try:  # 打开已经爬的文件列表
-                with open(os.path.join(path, 'logs.txt'), "r") as logs:
-                    for first in logs:
-                        if one in first:
-                            flag = 0
-            except IOError:
-                pass
-            if flag == 0:
-                NOW_TIME = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-                print(NOW_TIME + " Save File from:" + one, end='', flush=True)
-                get_more_url(one)
-                with open(os.path.join(path, 'logs.txt'), "a") as logs:  # 保存日志
-                    logs.write(one + '\n')
+            NOW_TIME = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+            print(NOW_TIME + " Save File from:" + one, end='', flush=True)
+            get_more_url(one)
+            with open(os.path.join(path, 'logs.txt'), "a") as logs:  # 保存日志
+                logs.write(one + '\n')
