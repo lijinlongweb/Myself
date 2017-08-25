@@ -102,5 +102,4 @@ if __name__ == '__main__':
             NOW_TIME = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
             print(NOW_TIME + " Save File from:" + one, end='', flush=True)
             get_more_url(one)
-            with open(os.path.join(path, 'logs.txt'), "a") as logs:  # 保存日志
-                logs.write(one + '\n')
+
