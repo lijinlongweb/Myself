@@ -50,7 +50,7 @@ def search(userDict):#查询成绩
             for i in range(2, len(datas)):
                 html += '<tr>'
                 for x in (2, 8, 9):
-                    data = self.browser.find_element_by_xpath(
+                    data = browser.find_element_by_xpath(
                             "//tbody/tr[%s]/td[%s]" % (i, x)).text
                     if data == '':  # 检查成绩是否出来
                         break
