@@ -7,11 +7,11 @@ def sendMail(receiver, mail_title, mail_content):
     # qq邮箱smtp服务器
     host_server = 'smtp.qq.com'
     # sender_qq为发件人的qq号码
-    sender_qq = '1191170766'
+    sender_qq = '**********'
     # pwd为qq邮箱的授权码
     pwd = 'zjqfuioxtozqgjia'
     # 发件人的邮箱
-    sender_qq_mail = 'chen_ye_119@qq.com'
+    sender_qq_mail = '**********@qq.com'
     # 收件人邮箱 receiver
     # 邮件的正文内容 mail_content
     # 邮件标题 mail_title
