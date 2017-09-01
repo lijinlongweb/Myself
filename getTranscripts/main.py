@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from sendMail import sendMail
 
 
-def getTranscripts(userDict):
+def getTranscripts(userDict, year, semester):
     userdata = Session()
     getJson = userdata.post(
         "http://mjwgl.ahnu.edu.cn/login/remotelogin",
@@ -14,10 +14,12 @@ def getTranscripts(userDict):
             "device": "aphone",
             "sessionid": ""
         })
-    result = userdata.post(
+    userdata.post(
         getJson.json()["homeurl"],
         data={"requesttype": "cjcx",
               "sessionid": getJson.json()["sessionid"]})
+    result = userdata.get(
+        "http://mjwgl.ahnu.edu.cn/query/cjquery/index?action=ok&xkxn=%s&xkxq=%s" % (year, semester))
     page = result.content.decode("utf-8")
     text = BeautifulSoup(page, "lxml")
     html = "<html><body><table>"
@@ -26,7 +28,7 @@ def getTranscripts(userDict):
         html += "<tr>"
         for one in each.children:
             if count in (3, 5, 7, 9):
-                if one.text == "":
+                if one.text == "" and count == 9:
                     break
                 html += str(one)
             count += 1
@@ -36,13 +38,7 @@ def getTranscripts(userDict):
         break
     else:
         html += "</table></body></html>"
+        
         sendMail(
             receiver=userDict["email"], mail_title="期末成绩单", mail_content=html)
 
-
-userDict = {
-    "username": "16111204040",
-    "password": "123456789",
-    "email": "1191170766@qq.com"
-}
-getTranscripts(userDict)
