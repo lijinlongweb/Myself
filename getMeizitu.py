@@ -39,7 +39,7 @@ def get_image(url, filename, headers):  # 保存图片
             os.makedirs(os.path.dirname(imgPath))  # 建立该目录
         while True:
             try:  # 防止网络超时
-                image = requests.get(url, headers=headers).content  # 获取图片二进制
+                image = requests.get(url, headers=headers, timeout=3).content  # 获取图片二进制
                 with open(imgPath, "wb") as jpg:  # 保存图片
                     jpg.write(image)
             except requests.Timeout:
@@ -54,7 +54,7 @@ def get_image(url, filename, headers):  # 保存图片
 def get_more_url(Root_Url):  # 递归获得当前套图
     while True:  # 死循环处理网页内容获取
         try:
-            imagePage = requests.get(Root_Url)
+            imagePage = requests.get(Root_Url, timeout=3)
         except Exception:  # 处理异常
             time.sleep(1)
             continue
