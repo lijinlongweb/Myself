@@ -19,10 +19,8 @@ python ChangeFileName.py -F test newTest
 ```
 
 ### ChangeName
-ChangeFileName的增强版，允许批量修改后缀名，或使用正则表达式修改文件名。exe文件是64位
+ChangeFileName的增强版。exe文件是64位
 
 兼容原有使用方法。使用正则表达式需要参数--oldn和--newn
-* 样例:
-```python
-python ChangeFileName.py -F --oldn=Test_(\d+) --newn=TestResult_\1
-```
+
+正则使用参考[这里](http://python3-cookbook.readthedocs.io/zh_CN/latest/c02/p05_search_and_replace_text.html)
