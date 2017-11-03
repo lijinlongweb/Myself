@@ -1,0 +1,4 @@
+python3.5 manage.py migrate
+python3.5 manage.py creatersuperuser
+python3.5 manage.py collectstatic
+python3.5 manage.py process_tasks
